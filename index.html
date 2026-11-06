@@ -915,12 +915,13 @@ side:"confederate",
 clues:[
 "A Confederate enlistment broadside is posted.",
 "A Confederate banner hangs nearby.",
-"Several visitors appear to have military connections."
+"A gray military coat hangs beside the door."
 ],
 
 visuals:[
 ["poster",250,240],
-["confBanner",500,260]
+["confBanner",500,260],
+["grayCoat",350,280]
 ]
 },
 
@@ -951,6 +952,65 @@ clues:[
 visuals:[
 ["cross",260,250],
 ["tools",500,270]
+]
+},
+
+{
+side:"union",
+
+clues:[
+"A United States flag is displayed beside the house.",
+"A Union newspaper is posted near the entrance.",
+"No Confederate symbols are visible."
+],
+
+visuals:[
+["unionFlag",500,220],
+["newspaper",250,240]
+]
+},
+
+{
+side:"confederate",
+
+clues:[
+"A Confederate banner hangs beside the porch.",
+"A gray military coat is displayed outside.",
+"No Union symbols are visible."
+],
+
+visuals:[
+["confBanner",500,220],
+["grayCoat",250,260]
+]
+},
+
+{
+side:"neutral",
+
+clues:[
+"A laundry line is the only item outside the home.",
+"No military clothing or political symbols are visible.",
+"The visible features are consistent with daily household life."
+],
+
+visuals:[
+["laundry",250,240]
+]
+},
+
+{
+side:"neutral",
+
+clues:[
+"Farm tools are stored near the house.",
+"Laundry hangs outside the home.",
+"No political or military items are visible."
+],
+
+visuals:[
+["tools",500,270],
+["laundry",250,240]
 ]
 }
 
@@ -1013,7 +1073,7 @@ return previousScenario;
 function nextScenario(){
 
 answered=false;
-document.querySelectorAll('.choice-button').forEach(button=>{
+document.querySelectorAll('#choices .choice-button').forEach(button=>{
 button.disabled=false;
 });
 
@@ -1049,7 +1109,7 @@ function guess(answer){
 
 if(answered)return;
 answered=true;
-document.querySelectorAll('.choice-button').forEach(button=>{
+document.querySelectorAll('#choices .choice-button').forEach(button=>{
 button.disabled=true;
 });
 
@@ -1145,6 +1205,9 @@ Begin Another Investigation
 
 </button>
 
+<a class="choice-button back-link" href="https://pgbsp.github.io/follow-a-soldier/">
+            Back to Story
+        </a>
 </div>
 `;
 

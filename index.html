@@ -1,0 +1,1128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Civilian Loyalties at Prairie Grove</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@400;700&family=Source+Sans+3:wght@400;600;700&display=swap" rel="stylesheet">
+
+<style>
+
+:root{
+
+--parchment:#F6F0E3;
+--aged-paper:#E7DDC6;
+
+--earth-brown:#5E4632;
+--historic-red:#8E3B2F;
+
+--sage:#7E9277;
+--prairie-tan:#C8AF87;
+
+--shadow:#B8AC98;
+
+}
+
+*{
+box-sizing:border-box;
+}
+
+body{
+
+margin:0;
+
+background:
+linear-gradient(
+180deg,
+#f6f0e3 0%,
+#efe5d1 100%
+);
+
+color:var(--earth-brown);
+
+font-family:'Source Sans 3',sans-serif;
+
+line-height:1.6;
+
+padding:20px;
+
+}
+
+#game{
+
+max-width:1200px;
+
+margin:auto;
+
+background:var(--parchment);
+
+border:1px solid #bba985;
+
+box-shadow:0 2px 4px rgba(0,0,0,.08);
+
+padding:24px;
+
+}
+
+/* ==========================
+HEADER
+========================== */
+
+.interpretive-header{
+
+border-bottom:4px solid var(--historic-red);
+
+margin-bottom:24px;
+
+padding-bottom:18px;
+
+}
+
+h1{
+
+font-family:'Libre Baskerville',serif;
+
+font-size:clamp(2rem,4vw,3.2rem);
+
+margin:.25rem 0;
+
+}
+
+.subtitle{
+
+margin-top:0;
+
+text-transform:uppercase;
+
+letter-spacing:.15em;
+
+color:#6f6355;
+
+font-size:.95rem;
+
+}
+
+/* ==========================
+INTRO STORY
+========================== */
+
+.story-panel{
+
+background:var(--aged-paper);
+
+padding:20px;
+
+border-left:6px solid var(--historic-red);
+
+margin-bottom:24px;
+
+font-size:1.08rem;
+
+}
+
+/* ==========================
+PROGRESS
+========================== */
+
+#hud{
+
+display:flex;
+
+justify-content:space-between;
+
+flex-wrap:wrap;
+
+gap:10px;
+
+margin-bottom:18px;
+
+font-weight:600;
+
+}
+
+/* ==========================
+LANDSCAPE
+========================== */
+
+#scene{
+
+position:relative;
+
+aspect-ratio:16 / 9;
+
+overflow:hidden;
+
+border:2px solid #bba985;
+
+background:
+linear-gradient(
+to bottom,
+#d7e6ef 0%,
+#e8f2f6 60%,
+#97aa83 60%,
+#789063 100%
+);
+
+}
+
+/* Hills */
+
+.hill{
+
+position:absolute;
+
+bottom:0;
+
+background:#6d8a56;
+
+border-radius:50%;
+
+}
+
+.h1{
+
+width:700px;
+height:180px;
+
+left:-150px;
+bottom:-90px;
+
+}
+
+.h2{
+
+width:850px;
+height:220px;
+
+right:-200px;
+bottom:-120px;
+
+}
+
+/* Farm */
+
+#house{
+
+position:absolute;
+
+bottom:95px;
+left:50%;
+
+transform:translateX(-50%);
+
+width:340px;
+height:210px;
+
+background:#c89d72;
+
+border:4px solid #5a341d;
+
+}
+
+#roof{
+
+position:absolute;
+
+width:390px;
+height:90px;
+
+top:-90px;
+left:-25px;
+
+background:#714122;
+
+clip-path:polygon(50% 0%,100% 100%,0% 100%);
+
+}
+
+.window{
+
+position:absolute;
+
+width:60px;
+height:60px;
+
+background:#dff0ff;
+
+border:3px solid #5a341d;
+
+}
+
+#windowLeft{
+
+left:50px;
+top:60px;
+
+}
+
+#windowRight{
+
+right:50px;
+top:60px;
+
+}
+
+#door{
+
+position:absolute;
+
+width:80px;
+height:120px;
+
+background:#7a4c26;
+
+bottom:0;
+left:130px;
+
+}
+
+.location-caption{
+
+margin-top:10px;
+
+font-size:.95rem;
+
+font-style:italic;
+
+color:#6d6358;
+
+text-align:center;
+
+}
+
+/* ==========================
+OBSERVATIONS
+========================== */
+
+#observations{
+
+background:var(--aged-paper);
+
+border-left:6px solid var(--historic-red);
+
+padding:18px;
+
+margin-top:20px;
+
+font-size:1.05rem;
+
+}
+
+#observations h3{
+
+font-family:'Libre Baskerville',serif;
+
+margin-top:0;
+
+}
+
+/* ==========================
+BUTTONS
+========================== */
+
+#choices{
+
+display:flex;
+
+justify-content:center;
+
+flex-wrap:wrap;
+
+gap:12px;
+
+margin-top:18px;
+
+}
+
+.choice-button{
+
+background:#fff;
+
+border:2px solid var(--earth-brown);
+
+color:var(--earth-brown);
+
+padding:14px 24px;
+
+font-size:1rem;
+
+font-family:'Source Sans 3',sans-serif;
+
+cursor:pointer;
+
+}
+
+.choice-button:hover{
+
+background:var(--earth-brown);
+
+color:white;
+
+transition:.2s;
+
+}
+
+/* ==========================
+FEEDBACK
+========================== */
+
+#feedback{
+
+margin-top:18px;
+
+min-height:40px;
+
+font-size:1.05rem;
+
+font-weight:600;
+
+}
+
+/* ==========================
+INTERPRETIVE VISUAL CLUES
+========================== */
+
+.clue{
+
+position:absolute;
+
+}
+
+/* Flag */
+
+.unionFlag{
+
+width:80px;
+height:48px;
+
+background:
+repeating-linear-gradient(
+to bottom,
+#b22234 0px,
+#b22234 6px,
+white 6px,
+white 12px
+);
+
+}
+
+.unionFlag::before{
+
+content:"";
+
+position:absolute;
+
+width:35px;
+height:25px;
+
+background:#153d73;
+
+}
+
+/* Confederate banner */
+
+.confBanner{
+
+width:80px;
+height:48px;
+
+background:#a42a2a;
+
+}
+
+.confBanner::before,
+.confBanner::after{
+
+content:"";
+
+position:absolute;
+
+width:100%;
+height:6px;
+
+background:white;
+
+top:20px;
+
+}
+
+.confBanner::before{
+transform:rotate(30deg);
+}
+
+.confBanner::after{
+transform:rotate(-30deg);
+}
+
+/* Portraits */
+
+.lincoln{
+
+width:50px;
+height:70px;
+
+background:#333;
+
+border:4px solid #9a7440;
+
+}
+
+.davis{
+
+width:50px;
+height:70px;
+
+background:#777;
+
+border:4px solid #9a7440;
+
+}
+
+/* Coats */
+
+.blueCoat{
+
+width:50px;
+height:70px;
+
+background:#1e4378;
+
+clip-path:polygon(
+20% 0%,
+80% 0%,
+100% 30%,
+78% 100%,
+22% 100%,
+0% 30%
+);
+
+}
+
+.grayCoat{
+
+width:50px;
+height:70px;
+
+background:#8e8e8e;
+
+clip-path:polygon(
+20% 0%,
+80% 0%,
+100% 30%,
+78% 100%,
+22% 100%,
+0% 30%
+);
+
+}
+
+.poster{
+
+width:50px;
+height:70px;
+
+background:#efe5cf;
+
+border:2px solid #444;
+
+}
+
+.poster::before{
+
+content:"ENLIST";
+
+font-size:10px;
+
+position:absolute;
+
+left:4px;
+top:6px;
+
+}
+
+.newspaper{
+
+width:55px;
+height:70px;
+
+background:#f9f4ea;
+
+border:2px solid #444;
+
+}
+
+.newspaper::before{
+
+content:"NEWS";
+
+font-size:12px;
+
+font-weight:bold;
+
+position:absolute;
+
+left:7px;
+top:6px;
+
+}
+
+.laundry{
+
+width:80px;
+height:40px;
+
+}
+
+.laundry::before{
+
+content:"";
+
+position:absolute;
+
+width:80px;
+height:2px;
+
+background:black;
+
+}
+
+.laundry::after{
+
+content:"";
+
+position:absolute;
+
+left:15px;
+top:2px;
+
+width:50px;
+height:30px;
+
+background:white;
+
+border:1px solid #888;
+
+}
+
+.cross{
+
+width:15px;
+height:60px;
+
+background:#4d2f18;
+
+position:absolute;
+
+}
+
+.cross::before{
+
+content:"";
+
+position:absolute;
+
+width:50px;
+height:12px;
+
+background:#4d2f18;
+
+top:15px;
+left:-18px;
+
+}
+
+.tools{
+
+width:70px;
+height:60px;
+
+border-left:5px solid #5c3317;
+border-right:5px solid #5c3317;
+
+transform:rotate(20deg);
+
+}
+
+/* ==========================
+END SCREEN
+========================== */
+
+.final-screen{
+
+padding:20px;
+
+}
+
+blockquote{
+
+font-family:'Libre Baskerville',serif;
+
+border-left:4px solid var(--historic-red);
+
+padding-left:16px;
+
+font-style:italic;
+
+color:#4f4031;
+
+margin:20px 0;
+
+}
+
+/* ==========================
+MOBILE
+========================== */
+
+@media(max-width:768px){
+
+body{
+padding:10px;
+}
+
+#game{
+padding:16px;
+}
+
+#house{
+width:min(340px,70vw);
+height:min(210px,44vw);
+bottom:15%;
+}
+
+#roof{
+width:calc(100% + 50px);
+height:min(90px,18vw);
+top:max(-90px,-18vw);
+}
+
+.window{
+width:18%;
+height:29%;
+}
+
+#windowLeft{
+left:15%;
+}
+
+#windowRight{
+right:15%;
+}
+
+#door{
+width:24%;
+height:57%;
+left:50%;
+transform:translateX(-50%);
+}
+
+#choices{
+
+display:grid;
+
+grid-template-columns:1fr;
+
+}
+
+.choice-button{
+
+width:100%;
+
+}
+
+#hud{
+
+flex-direction:column;
+
+}
+
+}
+
+</style>
+</head>
+<body>
+
+<div id="game">
+
+<header class="interpretive-header">
+
+<h1>Civilian Loyalties at Prairie Grove</h1>
+
+<p class="subtitle">
+Northwest Arkansas • December 1862
+</p>
+
+</header>
+
+<section class="story-panel">
+
+<p>
+
+As Union and Confederate armies moved toward Prairie Grove,
+local families found themselves caught between two causes.
+
+Some openly supported one side.
+Others concealed their loyalties.
+Many simply hoped to protect their homes and livelihoods.
+
+Examine each household and consider what its visible clues
+might reveal.
+
+</p>
+
+</section>
+
+<div id="hud">
+
+<div>
+Household <span id="round">1</span> of 10
+</div>
+
+<div>
+Assessments Supported by Evidence:
+<span id="score">0</span>
+</div>
+
+</div>
+
+<div id="scene">
+
+<div class="hill h1"></div>
+<div class="hill h2"></div>
+
+<div id="house">
+
+<div id="roof"></div>
+
+<div id="windowLeft" class="window"></div>
+<div id="windowRight" class="window"></div>
+
+<div id="door"></div>
+
+</div>
+
+</div>
+
+<div class="location-caption">
+A farmstead west of Prairie Grove Ridge
+</div>
+
+<div id="observations">
+
+<h3>Observed Features</h3>
+
+<p>Examine the household closely.</p>
+
+</div>
+
+<div id="choices">
+
+<button class="choice-button" onclick="guess('union')">
+Likely Union Support
+</button>
+
+<button class="choice-button" onclick="guess('confederate')">
+Likely Confederate Support
+</button>
+
+<button class="choice-button" onclick="guess('neutral')">
+No Clear Political Alignment
+</button>
+
+</div>
+
+<div id="feedback"></div>
+
+</div>
+
+<script>
+
+const TOTAL_HOUSES = 10;
+
+let score = 0;
+let round = 0;
+let currentScenario = null;
+let answered = false;
+
+const scenarios = [
+
+{
+side:"union",
+
+clues:[
+"A United States flag hangs beside the porch.",
+"A Federal blue army coat hangs outside.",
+"A portrait identified as Abraham Lincoln is visible."
+],
+
+visuals:[
+["unionFlag",500,220],
+["blueCoat",250,260],
+["lincoln",540,150]
+]
+},
+
+{
+side:"union",
+
+clues:[
+"A Union newspaper is posted by the entrance.",
+"A Federal army coat hangs nearby.",
+"No Confederate material is visible."
+],
+
+visuals:[
+["newspaper",250,240],
+["blueCoat",500,270]
+]
+},
+
+{
+side:"confederate",
+
+clues:[
+"A Confederate banner has been displayed.",
+"A gray military coat hangs outside.",
+"A portrait of Jefferson Davis is visible."
+],
+
+visuals:[
+["confBanner",500,220],
+["grayCoat",250,260],
+["davis",250,150]
+]
+},
+
+{
+side:"confederate",
+
+clues:[
+"A Confederate enlistment broadside is posted.",
+"A Confederate banner hangs nearby.",
+"Several visitors appear to have military connections."
+],
+
+visuals:[
+["poster",250,240],
+["confBanner",500,260]
+]
+},
+
+{
+side:"neutral",
+
+clues:[
+"Laundry hangs from a line.",
+"Farm equipment is stacked nearby.",
+"No political material is visible."
+],
+
+visuals:[
+["laundry",250,240],
+["tools",500,270]
+]
+},
+
+{
+side:"neutral",
+
+clues:[
+"A wooden cross stands near the home.",
+"Only ordinary farm equipment is visible.",
+"No military items are displayed."
+],
+
+visuals:[
+["cross",260,250],
+["tools",500,270]
+]
+}
+
+];
+
+const historicalFacts = [
+
+"The Battle of Prairie Grove was fought on December 7, 1862.",
+
+"Many Arkansas communities contained both Union and Confederate supporters.",
+
+"Civilian loyalties could influence intelligence gathering and military operations.",
+
+"Families often faced pressure from both armies as control of the region shifted.",
+
+"The Union victory helped secure northwest Arkansas for future operations."
+
+];
+
+function clearVisuals(){
+
+document.querySelectorAll('.clue')
+.forEach(c=>c.remove());
+
+}
+
+function addVisual(type,x,y){
+
+const div=document.createElement("div");
+
+div.className=`clue ${type}`;
+
+div.style.left=(x/1200*100)+"%";
+div.style.top=(y/675*100)+"%";
+
+document.getElementById("scene")
+.appendChild(div);
+
+}
+
+function nextScenario(){
+
+answered=false;
+document.querySelectorAll('.choice-button').forEach(button=>{
+button.disabled=false;
+});
+
+clearVisuals();
+
+currentScenario=
+scenarios[Math.floor(Math.random()*scenarios.length)];
+
+currentScenario.visuals.forEach(v=>{
+
+addVisual(v[0],v[1],v[2]);
+
+});
+
+let html="<h3>Observed Features</h3><ul>";
+
+currentScenario.clues.forEach(c=>{
+
+html+=`<li>${c}</li>`;
+
+});
+
+html+="</ul>";
+
+document.getElementById("observations").innerHTML=html;
+
+document.getElementById("feedback").innerHTML="";
+
+document.getElementById("round").innerText=round+1;
+
+}
+
+function guess(answer){
+
+if(answered)return;
+answered=true;
+document.querySelectorAll('.choice-button').forEach(button=>{
+button.disabled=true;
+});
+
+const feedback=document.getElementById("feedback");
+
+if(answer===currentScenario.side){
+
+score++;
+
+feedback.style.color="#4b6d49";
+
+feedback.innerText=
+"Your interpretation is supported by the available evidence.";
+
+}else{
+
+feedback.style.color="#8E3B2F";
+
+feedback.innerText=
+"The available evidence suggests a different conclusion.";
+
+}
+
+document.getElementById("score").innerText=score;
+
+round++;
+
+setTimeout(()=>{
+
+if(round>=TOTAL_HOUSES){
+
+finishGame();
+
+}else{
+
+nextScenario();
+
+}
+
+},1800);
+
+}
+
+function finishGame(){
+
+const fact=
+historicalFacts[
+Math.floor(Math.random()*historicalFacts.length)
+];
+
+document.getElementById("game").innerHTML=`
+
+<div class="final-screen">
+
+<header class="interpretive-header">
+<h1>Investigation Complete</h1>
+</header>
+
+<p>
+
+You examined ten households near Prairie Grove and considered
+how civilians expressed, concealed, or complicated their loyalties
+during the Civil War.
+
+</p>
+
+<h3>Your Findings</h3>
+
+<p>
+Assessments supported by evidence:
+<strong>${score} of ${TOTAL_HOUSES}</strong>
+</p>
+
+<blockquote>
+
+"The people of northwest Arkansas often found themselves
+living between opposing armies, with loyalties that were not
+always visible."
+
+</blockquote>
+
+<p>
+
+<strong>Historical Reflection:</strong><br>
+${fact}
+
+</p>
+
+<button class="choice-button"
+onclick="location.reload()">
+
+Begin Another Investigation
+
+</button>
+
+</div>
+`;
+
+}
+
+nextScenario();
+
+</script>
+
+</body>
+</html>

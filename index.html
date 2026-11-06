@@ -383,6 +383,12 @@ font-weight:600;
 
 }
 
+.back-link{
+	display:table;
+	margin:18px auto 0;
+	text-decoration:none;
+}
+
 /* ==========================
 INTERPRETIVE VISUAL CLUES
 ========================== */
@@ -837,6 +843,10 @@ No Clear Political Alignment
 
 <div id="feedback"></div>
 
+<a class="choice-button back-link" href="https://pgbsp.github.io/follow-a-soldier/">
+Back to Story
+</a>
+
 </div>
 
 <script>
@@ -847,6 +857,8 @@ let score = 0;
 let round = 0;
 let currentScenario = null;
 let answered = false;
+let scenarioDeck = [];
+let previousScenario = null;
 
 const scenarios = [
 
@@ -979,6 +991,25 @@ document.getElementById("scene")
 
 }
 
+function drawScenario(){
+
+if(scenarioDeck.length===0){
+	scenarioDeck=[...scenarios];
+	for(let i=scenarioDeck.length-1;i>0;i--){
+		const j=Math.floor(Math.random()*(i+1));
+		[scenarioDeck[i],scenarioDeck[j]]=[scenarioDeck[j],scenarioDeck[i]];
+	}
+	if(scenarioDeck.length>1 && scenarioDeck[scenarioDeck.length-1]===previousScenario){
+		[scenarioDeck[0],scenarioDeck[scenarioDeck.length-1]]=
+		[scenarioDeck[scenarioDeck.length-1],scenarioDeck[0]];
+	}
+}
+
+previousScenario=scenarioDeck.pop();
+return previousScenario;
+
+}
+
 function nextScenario(){
 
 answered=false;
@@ -988,8 +1019,7 @@ button.disabled=false;
 
 clearVisuals();
 
-currentScenario=
-scenarios[Math.floor(Math.random()*scenarios.length)];
+currentScenario=drawScenario();
 
 currentScenario.visuals.forEach(v=>{
 
